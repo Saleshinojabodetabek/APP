@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_id'])) {
 
 /* AMBIL DATA MITRA */
 $stmt = $pdo->query("
-    SELECT id, nama_mitra, no_telepon, tipe_mobil, plat_mobil, status
+    SELECT id, nama_mitra, email, no_telepon, tipe_mobil, plat_mobil, status
     FROM mitra
     ORDER BY created_at DESC
 ");
@@ -42,6 +42,7 @@ $mitra = $stmt->fetchAll();
             <tr>
                 <th>No</th>
                 <th>Nama Mitra</th>
+                <th>Email (Gmail)</th>
                 <th>No Telepon</th>
                 <th>Tipe Mobil</th>
                 <th>Plat Mobil</th>
@@ -53,7 +54,7 @@ $mitra = $stmt->fetchAll();
 
         <?php if (count($mitra) === 0): ?>
             <tr>
-                <td colspan="7">Belum ada data mitra</td>
+                <td colspan="8">Belum ada data mitra</td>
             </tr>
         <?php endif; ?>
 
@@ -61,6 +62,7 @@ $mitra = $stmt->fetchAll();
             <tr>
                 <td><?= $no++ ?></td>
                 <td><?= htmlspecialchars($m['nama_mitra']) ?></td>
+                <td><?= htmlspecialchars($m['email']) ?></td>
                 <td><?= htmlspecialchars($m['no_telepon']) ?></td>
                 <td><?= htmlspecialchars($m['tipe_mobil']) ?></td>
                 <td><?= htmlspecialchars($m['plat_mobil']) ?></td>

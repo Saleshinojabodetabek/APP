@@ -27,7 +27,7 @@ if (!$mitra) {
 }
 
 /* AMBIL KENDARAAN:
-   - yang available
+   - available
    - + kendaraan yang sedang dipakai mitra ini
 */
 $stmt = $pdo->prepare("
@@ -43,10 +43,16 @@ $kendaraanList = $stmt->fetchAll();
 /* SIMPAN PERUBAHAN */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $nama_mitra   = trim($_POST['nama_mitra']);
-    $no_telepon   = trim($_POST['no_telepon']);
-    $kendaraanId  = (int) $_POST['kendaraan_id'];
+    $nama_mitra  = trim($_POST['nama_mitra']);
+    $email       = trim($_POST['email']);
+    $no_telepon  = trim($_POST['no_telepon']);
+    $kendaraanId = (int) $_POST['kendaraan_id'];
     $passwordBaru = trim($_POST['password']);
+
+    /* validasi email */
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Format email tidak valid");
+    }
 
     /* ambil kendaraan terpilih */
     $stmt = $pdo->prepare("
@@ -62,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Kendaraan tidak valid.");
     }
 
-    /* kalau kendaraan DIGANTI */
+    /* JIKA KENDARAAN DIGANTI */
     if ($kendaraanBaru['plat_nomor'] !== $mitra['plat_mobil']) {
 
         /* kendaraan lama -> available */
@@ -82,31 +88,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$kendaraanId]);
     }
 
-    /* update mitra */
+    /* UPDATE MITRA */
     if ($passwordBaru !== '') {
-        /* update dengan password baru */
+
         $stmt = $pdo->prepare("
             UPDATE mitra
-            SET nama_mitra = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?, password = ?
+            SET nama_mitra = ?, email = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?, password = ?
             WHERE id = ?
         ");
         $stmt->execute([
             $nama_mitra,
+            $email,
             $no_telepon,
             $kendaraanBaru['tipe_mobil'],
             $kendaraanBaru['plat_nomor'],
             password_hash($passwordBaru, PASSWORD_DEFAULT),
             $mitraId
         ]);
+
     } else {
-        /* update TANPA ganti password */
+
         $stmt = $pdo->prepare("
             UPDATE mitra
-            SET nama_mitra = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?
+            SET nama_mitra = ?, email = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?
             WHERE id = ?
         ");
         $stmt->execute([
             $nama_mitra,
+            $email,
             $no_telepon,
             $kendaraanBaru['tipe_mobil'],
             $kendaraanBaru['plat_nomor'],
@@ -143,13 +152,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="text" name="nama_mitra"
                    value="<?= htmlspecialchars($mitra['nama_mitra']) ?>" required>
 
+            <label>Email (Gmail)</label>
+            <input type="email" name="email"
+                   value="<?= htmlspecialchars($mitra['email']) ?>" required>
+
             <label>No Telepon</label>
             <input type="text" name="no_telepon"
                    value="<?= htmlspecialchars($mitra['no_telepon']) ?>" required>
 
             <label>Password Baru (opsional)</label>
             <input type="password" name="password"
-                   placeholder="Kosongkan jika tidak ingin ganti">
+                   placeholder="Kosongkan jika tidak ingin ganti password">
 
             <label>Pilih Kendaraan</label>
             <select name="kendaraan_id" required>

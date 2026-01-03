@@ -19,12 +19,26 @@ $kendaraanAvailable = $stmt->fetchAll();
 
 /* SIMPAN DATA */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     $nama_mitra  = trim($_POST['nama_mitra']);
+    $email       = trim($_POST['email']);
     $no_telepon  = trim($_POST['no_telepon']);
     $kendaraanId = (int) $_POST['kendaraan_id'];
-    $password    = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password    = trim($_POST['password']);
 
-    /* ambil data kendaraan */
+    /* VALIDASI EMAIL */
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Format email tidak valid");
+    }
+
+    /* VALIDASI PASSWORD */
+    if (strlen($password) < 6) {
+        die("Password minimal 6 karakter");
+    }
+
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+    /* AMBIL DATA KENDARAAN */
     $stmt = $pdo->prepare("
         SELECT tipe_mobil, plat_nomor
         FROM kendaraan
@@ -38,20 +52,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Kendaraan tidak tersedia atau sudah dipakai.");
     }
 
-    /* simpan mitra */
+    /* SIMPAN MITRA */
     $stmt = $pdo->prepare("
-        INSERT INTO mitra (nama_mitra, no_telepon, tipe_mobil, plat_mobil, password)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO mitra (nama_mitra, email, no_telepon, tipe_mobil, plat_mobil, password)
+        VALUES (?, ?, ?, ?, ?, ?)
     ");
     $stmt->execute([
         $nama_mitra,
+        $email,
         $no_telepon,
         $kendaraan['tipe_mobil'],
         $kendaraan['plat_nomor'],
-        $password
+        $passwordHash
     ]);
 
-    /* update kendaraan jadi unavailable */
+    /* UPDATE KENDARAAN JADI UNAVAILABLE */
     $stmt = $pdo->prepare("
         UPDATE kendaraan
         SET status = 'unavailable'
@@ -86,6 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <label>Nama Mitra</label>
             <input type="text" name="nama_mitra" required>
+
+            <label>Email (Gmail)</label>
+            <input type="email" name="email" placeholder="contoh@gmail.com" required>
 
             <label>No Telepon</label>
             <input type="text" name="no_telepon" required>
