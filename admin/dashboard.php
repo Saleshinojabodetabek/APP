@@ -1,10 +1,20 @@
 <?php
 session_start();
+require '../config/database.php';
+
 if (!isset($_SESSION['admin'])) {
     header("Location: login.php");
     exit;
 }
-$admin = $_SESSION['admin'];
+
+// Statistik
+$totalUser = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE role!='admin'"))[0];
+$userAktif = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE status='active' AND role!='admin'"))[0];
+$userNonaktif = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE status='inactive' AND role!='admin'"))[0];
+
+// Dummy sementara (nanti ganti ke tabel pembayaran)
+$totalPembayaran = "Rp 0";
+$totalOutstanding = "Rp 0";
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -18,42 +28,45 @@ $admin = $_SESSION['admin'];
 <?php include 'sidebar.php'; ?>
 
 <div class="main">
-    <?php include 'header.php'; ?>
+<?php include 'header.php'; ?>
 
-    <div class="content">
-        <h2>Dashboard</h2>
+<div class="content">
+    <h2>Dashboard Admin</h2>
+    <p>Selamat datang, <b><?= $_SESSION['admin']['name']; ?></b></p>
 
-        <div class="cards">
-            <div class="card">
-                <h3>Total User</h3>
-                <p>120</p>
-            </div>
-            <div class="card">
-                <h3>Total Kendaraan</h3>
-                <p>45</p>
-            </div>
-            <div class="card">
-                <h3>Pembayaran Pending</h3>
-                <p>Rp 3.600.000</p>
-            </div>
-            <div class="card">
-                <h3>Pembayaran Lunas</h3>
-                <p>Rp 18.400.000</p>
-            </div>
+    <div class="stats">
+        <div class="card blue">
+            <h3><?= $totalUser ?></h3>
+            <p>Total User</p>
         </div>
 
-        <div class="section">
-            <h3>Menu Cepat</h3>
-            <div class="quick-menu">
-                <a href="#">Kelola User</a>
-                <a href="#">Kelola Kendaraan</a>
-                <a href="#">Verifikasi Pembayaran</a>
-                <a href="#">Izin Keluar Geofence</a>
-                <a href="#">Broadcast Info</a>
-            </div>
+        <div class="card green">
+            <h3><?= $userAktif ?></h3>
+            <p>User Aktif</p>
         </div>
 
+        <div class="card red">
+            <h3><?= $userNonaktif ?></h3>
+            <p>User Nonaktif</p>
+        </div>
+
+        <div class="card purple">
+            <h3><?= $totalOutstanding ?></h3>
+            <p>Total Outstanding</p>
+        </div>
     </div>
+
+    <h3>Menu Pengelolaan</h3>
+    <div class="menu-grid">
+        <a href="users.php" class="menu-card">👤 Kelola User</a>
+        <a href="#" class="menu-card">🚗 Kelola Kendaraan</a>
+        <a href="#" class="menu-card">💳 Pembayaran</a>
+        <a href="#" class="menu-card">📍 Geofence</a>
+        <a href="#" class="menu-card">📄 Laporan</a>
+        <a href="logout.php" class="menu-card danger">🚪 Logout</a>
+    </div>
+
+</div>
 </div>
 
 </body>
