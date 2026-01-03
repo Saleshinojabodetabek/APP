@@ -31,7 +31,7 @@ $totalOutstanding = "Rp 0";
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
 </head>
 <body>
 
