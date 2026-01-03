@@ -8,7 +8,7 @@
         <li><a href="dashboard.php">🏠 Dashboard</a></li>
 
         <li class="title">Master Data</li>
-        <li><a href="#">👤 User (Customer)</a></li>
+        <li><a href="/mitra.php">👤 User (Customer)</a></li>
         <li><a href="#">🚗 Kendaraan</a></li>
         <li><a href="#">📄 Kontrak & Kemitraan</a></li>
 
