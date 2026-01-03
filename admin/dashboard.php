@@ -17,6 +17,7 @@ $userNonaktif = $pdo->query("SELECT COUNT(*) FROM users WHERE role != 'admin' AN
 $totalOutstandingValue = 2500000; // ganti nanti dari tabel pembayaran
 $totalOutstanding = "Rp " . number_format($totalOutstandingValue, 0, ',', '.');
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
