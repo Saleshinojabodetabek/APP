@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Test Login Admin</title>
-</head>
-<body>
+  <head>
+    <title>Test Login Admin</title>
+  </head>
+  <body>
+    <h3>Login Admin</h3>
 
-<h3>Login Admin</h3>
+    <input id="phone" placeholder="Phone" /><br /><br />
+    <input id="password" type="password" placeholder="Password" /><br /><br />
 
-<input id="phone" placeholder="Phone"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+    <button onclick="login()">Login</button>
 
-<button onclick="login()">Login</button>
+    <pre id="result"></pre>
 
-<pre id="result"></pre>
-
-<script>
-function login() {
-  fetch("/api/admin/login.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      phone: document.getElementById("phone").value,
-      password: document.getElementById("password").value
-    })
-  })
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("result").innerText = data;
-  });
-}
-</script>
-
-</body>
+    <script>
+      function login() {
+        fetch("/admin/login.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone: document.getElementById("phone").value,
+            password: document.getElementById("password").value,
+          }),
+        })
+          .then((res) => res.text())
+          .then((data) => {
+            document.getElementById("result").innerText = data;
+          });
+      }
+    </script>
+  </body>
 </html>
