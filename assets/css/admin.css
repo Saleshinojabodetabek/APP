@@ -428,3 +428,56 @@ body {
 .form-actions a:hover {
   background: #d1d5db;
 }
+
+/* =========================
+   TABLE KENDARAAN (READABLE)
+========================= */
+
+/* spasi antar baris */
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+/* zebra row */
+.table tbody tr:nth-child(even) {
+  background-color: #fcfcfd;
+}
+
+/* hover lebih lembut */
+.table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* kolom angka lebih rapih */
+.table td:first-child {
+  width: 60px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* kolom aksi */
+.table td:last-child {
+  white-space: nowrap;
+}
+
+/* link aksi lebih jelas */
+.table td a {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.table td a:hover {
+  background: #eef2ff;
+  text-decoration: none;
+}
+
+/* badge status lebih konsisten */
+.badge-success,
+.badge-danger {
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+}
