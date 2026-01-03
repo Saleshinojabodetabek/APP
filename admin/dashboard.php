@@ -38,7 +38,6 @@ $totalOutstanding = "Rp 0";
 <?php include 'sidebar.php'; ?>
 
 <div class="main">
-<?php include 'header.php'; ?>
 
 <div class="content">
     <h2>Dashboard Admin</h2>
