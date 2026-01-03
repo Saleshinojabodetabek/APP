@@ -7,13 +7,13 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-$stmt = $pdo->query("SELECT * FROM vehicle ORDER BY created_at DESC");
+$stmt = $pdo->query("SELECT * FROM kendaraan ORDER BY created_at DESC");
 $data = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Kelola vehicle</title>
+<title>Kelola Kendaraan</title>
 <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body>
@@ -23,8 +23,8 @@ $data = $stmt->fetchAll();
 <div class="main">
 <div class="content">
 
-<h2>Kelola vehicle</h2>
-<a href="vehicle-add.php" class="menu-card">+ Tambah vehicle</a>
+<h2>Kelola kendaraan</h2>
+<a href="kendaraan-add.php" class="menu-card">+ Tambah kendaraan</a>
 
 <table style="margin-top:20px" width="100%" cellpadding="10">
 <tr>
@@ -37,7 +37,7 @@ $data = $stmt->fetchAll();
 </tr>
 
 <?php if (!$data): ?>
-<tr><td colspan="6">Belum ada data vehicle</td></tr>
+<tr><td colspan="6">Belum ada data kendaraan</td></tr>
 <?php endif; ?>
 
 <?php $no=1; foreach ($data as $k): ?>
@@ -52,8 +52,8 @@ $data = $stmt->fetchAll();
         </b>
     </td>
     <td>
-        <a href="vehicle-edit.php?id=<?= $k['id'] ?>">Edit</a> |
-        <a href="vehicle-delete.php?id=<?= $k['id'] ?>"
+        <a href="kendaraan-edit.php?id=<?= $k['id'] ?>">Edit</a> |
+        <a href="kendaraan-delete.php?id=<?= $k['id'] ?>"
            onclick="return confirm('Hapus kendaraan ini?')">Hapus</a>
     </td>
 </tr>
