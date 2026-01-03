@@ -36,8 +36,12 @@ $sql = "SELECT * FROM users
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$phone]);
 $admin = $stmt->fetch();
-var_dump($admin);
-exit;
+
+if (!password_verify($password, $admin['password'])) {
+    echo json_encode(["error" => "Login admin gagal"]);
+    exit;
+}
+
 
 
 /*
