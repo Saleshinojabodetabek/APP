@@ -287,3 +287,13 @@ h3 {
     margin-left: 0;
   }
 }
+
+.badge-success {
+  color: #198754;
+  font-weight: 600;
+}
+
+.badge-danger {
+  color: #dc3545;
+  font-weight: 600;
+}
