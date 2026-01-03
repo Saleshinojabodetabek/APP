@@ -36,6 +36,9 @@ $sql = "SELECT * FROM users
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$phone]);
 $admin = $stmt->fetch();
+var_dump($admin);
+exit;
+
 
 /*
   Jika admin tidak ditemukan
