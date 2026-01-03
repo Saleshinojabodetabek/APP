@@ -32,8 +32,18 @@ $totalOutstanding = "Rp " . number_format($totalOutstandingValue, 0, ',', '.');
 <div class="main">
 <div class="content">
 
-<h2>Dashboard Admin</h2>
-<p>Selamat datang, <b><?= htmlspecialchars($_SESSION['admin_name']); ?></b></p>
+<div class="dashboard-header">
+    <div class="dashboard-title">
+        <h2>Dashboard Admin</h2>
+        <p>
+            Selamat datang,
+            <span class="admin-name">
+                <?= htmlspecialchars($_SESSION['admin_name']); ?>
+            </span>
+        </p>
+    </div>
+</div>
+
 
 <!-- CARD STATISTIK -->
 <div class="stats">

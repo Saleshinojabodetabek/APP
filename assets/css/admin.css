@@ -319,3 +319,31 @@ body {
     margin-left: 0;
   }
 }
+
+/* =========================
+   DASHBOARD HEADER
+========================= */
+.dashboard-header {
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.dashboard-title h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #1f2937;
+}
+
+.dashboard-title p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.dashboard-title .admin-name {
+  font-weight: 600;
+  color: #0d6efd;
+}
