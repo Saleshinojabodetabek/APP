@@ -542,21 +542,18 @@ body {
 /* Header kolom No */
 .table thead th:first-child {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
-  color: #0d6efd;
   text-align: center;
 }
 
 /* Header Tipe Mobil */
 .table thead th:nth-child(2) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
-  color: #0d6efd;
   text-align: center;
 }
 
 /* Header Tahun */
 .table thead th:nth-child(3) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
-  color: #0d6efd;
   text-align: center;
 }
 
