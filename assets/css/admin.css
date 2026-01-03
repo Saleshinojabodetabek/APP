@@ -14,7 +14,7 @@ body {
 }
 
 /* =========================
-   SIDEBAR
+   SIDEBAR (FIX SCROLL)
 ========================= */
 .sidebar {
   width: 260px;
@@ -24,6 +24,22 @@ body {
   left: 0;
   top: 0;
   color: #fff;
+
+  /* 🔥 FIX UTAMA */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* scrollbar sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .sidebar .logo {
@@ -230,29 +246,6 @@ body {
 }
 
 /* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px) {
-  .sidebar {
-    width: 220px;
-  }
-  .main {
-    margin-left: 220px;
-  }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-  .main {
-    margin-left: 0;
-  }
-}
-
-/* =========================
    FORM
 ========================= */
 .form-box {
@@ -323,4 +316,27 @@ body {
 
 .form-actions a:hover {
   background: #dee2e6;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 220px;
+  }
+  .main {
+    margin-left: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .main {
+    margin-left: 0;
+  }
 }
