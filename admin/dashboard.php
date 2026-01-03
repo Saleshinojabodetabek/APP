@@ -2,18 +2,28 @@
 session_start();
 require '../config/database.php';
 
-if (!isset($_SESSION['admin'])) {
+/* CEK LOGIN ADMIN */
+if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit;
 }
 
-// Statistik
-$totalUser = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE role!='admin'"))[0];
-$userAktif = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE status='active' AND role!='admin'"))[0];
-$userNonaktif = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users WHERE status='inactive' AND role!='admin'"))[0];
+/* STATISTIK */
+$totalUser = $pdo->query("
+    SELECT COUNT(*) FROM users WHERE role != 'admin'
+")->fetchColumn();
 
-// Dummy sementara (nanti ganti ke tabel pembayaran)
-$totalPembayaran = "Rp 0";
+$userAktif = $pdo->query("
+    SELECT COUNT(*) FROM users 
+    WHERE role != 'admin' AND status = 'active'
+")->fetchColumn();
+
+$userNonaktif = $pdo->query("
+    SELECT COUNT(*) FROM users 
+    WHERE role != 'admin' AND status = 'inactive'
+")->fetchColumn();
+
+/* SEMENTARA */
 $totalOutstanding = "Rp 0";
 ?>
 <!DOCTYPE html>
@@ -32,7 +42,7 @@ $totalOutstanding = "Rp 0";
 
 <div class="content">
     <h2>Dashboard Admin</h2>
-    <p>Selamat datang, <b><?= $_SESSION['admin']['name']; ?></b></p>
+    <p>Selamat datang, <b><?= htmlspecialchars($_SESSION['admin_name']); ?></b></p>
 
     <div class="stats">
         <div class="card blue">
@@ -65,7 +75,6 @@ $totalOutstanding = "Rp 0";
         <a href="#" class="menu-card">📄 Laporan</a>
         <a href="logout.php" class="menu-card danger">🚪 Logout</a>
     </div>
-
 </div>
 </div>
 
