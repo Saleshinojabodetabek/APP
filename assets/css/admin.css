@@ -7,35 +7,30 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
-}
-
 body {
   font-family: "Segoe UI", Tahoma, sans-serif;
   background: #f4f6f9;
   color: #333;
-  overflow-y: auto;
 }
 
 /* =========================
-   SIDEBAR (FIX TOTAL)
+   SIDEBAR (FINAL – FIX SCROLL)
 ========================= */
 .sidebar {
   width: 260px;
   height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
   background: linear-gradient(180deg, #0f4c75, #1b6ca8);
+  position: fixed;
+  left: 0;
+  top: 0;
   color: #fff;
 
+  /* FIX */
   display: flex;
   flex-direction: column;
 }
 
-/* LOGO (TETAP DI ATAS) */
+/* LOGO */
 .sidebar .logo {
   display: flex;
   align-items: center;
@@ -51,8 +46,8 @@ body {
   margin-right: 12px;
 }
 
-/* MENU (INI YANG SCROLL) */
-.sidebar .menu {
+/* MENU (YANG SCROLL) */
+.sidebar ul {
   list-style: none;
   padding: 15px;
   margin: 0;
@@ -63,23 +58,23 @@ body {
 }
 
 /* SCROLLBAR MENU */
-.sidebar .menu::-webkit-scrollbar {
+.sidebar ul::-webkit-scrollbar {
   width: 6px;
 }
-.sidebar .menu::-webkit-scrollbar-thumb {
+.sidebar ul::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.35);
   border-radius: 6px;
 }
-.sidebar .menu::-webkit-scrollbar-track {
+.sidebar ul::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* MENU ITEM */
-.sidebar .menu li {
+/* ITEM MENU */
+.sidebar ul li {
   margin-bottom: 6px;
 }
 
-.sidebar .menu li a {
+.sidebar ul li a {
   display: block;
   padding: 12px 15px;
   color: #fff;
@@ -88,21 +83,16 @@ body {
   font-size: 14px;
 }
 
-.sidebar .menu li a:hover {
+.sidebar ul li a:hover {
   background: rgba(255, 255, 255, 0.18);
 }
 
 /* TITLE */
-.sidebar .menu .title {
+.sidebar ul .title {
   margin: 18px 0 8px;
   font-size: 11px;
   opacity: 0.75;
   text-transform: uppercase;
-}
-
-/* LOGOUT */
-.sidebar .menu .logout {
-  margin-top: 15px;
 }
 
 /* =========================
@@ -149,6 +139,46 @@ body {
 }
 
 /* =========================
+   DASHBOARD STATS
+========================= */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 20px 0 30px;
+}
+
+.card {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.card h3 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666;
+}
+
+.blue {
+  border-left: 6px solid #0d6efd;
+}
+.green {
+  border-left: 6px solid #198754;
+}
+.red {
+  border-left: 6px solid #dc3545;
+}
+.purple {
+  border-left: 6px solid #6f42c1;
+}
+
+/* =========================
    TABLE
 ========================= */
 .table {
@@ -189,7 +219,7 @@ body {
 }
 
 /* =========================
-   BADGE
+   BADGE STATUS
 ========================= */
 .badge-success {
   background: #e6f4ea;
@@ -210,6 +240,22 @@ body {
 }
 
 /* =========================
+   CHART BOX
+========================= */
+.chart-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+  max-width: 420px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.chart-box.wide {
+  max-width: 720px;
+}
+
+/* =========================
    FORM
 ========================= */
 .form-box {
@@ -225,6 +271,7 @@ body {
   margin-bottom: 6px;
   font-size: 13px;
   font-weight: 600;
+  color: #444;
 }
 
 .form-box input,
@@ -233,7 +280,16 @@ body {
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  font-size: 14px;
   margin-bottom: 18px;
+  background: #fafafa;
+}
+
+.form-box input:focus,
+.form-box select:focus {
+  outline: none;
+  border-color: #0d6efd;
+  background: #fff;
 }
 
 .form-actions {
