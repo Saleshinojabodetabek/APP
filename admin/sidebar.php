@@ -9,7 +9,7 @@
 
         <li class="title">Master Data</li>
         <li><a href="mitra.php">👤 Data Mitra</a></li>
-        <li><a href="vehicle.php">🚗 Kendaraan</a></li>
+        <li><a href="kendaraan.php">🚗 Kendaraan</a></li>
         <li><a href="#">📄 Kontrak & Kemitraan</a></li>
 
         <li class="title">Transaksi</li>
