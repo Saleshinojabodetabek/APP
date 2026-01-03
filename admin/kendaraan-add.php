@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         VALUES (?, ?, ?, ?)
     ");
     $stmt->execute([
-        $_POST['tipe_mobil'],
-        $_POST['tahun_mobil'],
-        $_POST['plat_nomor'],
+        trim($_POST['tipe_mobil']),
+        (int) $_POST['tahun_mobil'],
+        trim($_POST['plat_nomor']),
         $_POST['status']
     ]);
 
@@ -24,10 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Tambah Kendaraan</title>
-<link rel="stylesheet" href="../assets/css/admin.css">
+    <meta charset="UTF-8">
+    <title>Tambah Kendaraan</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body>
 
@@ -36,28 +37,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="main">
 <div class="content">
 
-<h2>Tambah Kendaraan</h2>
+    <div class="page-header">
+        <h2>Tambah Kendaraan</h2>
+    </div>
 
-<form method="POST">
-    <label>Tipe Mobil</label><br>
-    <input name="tipe_mobil" required><br><br>
+    <div class="form-box">
+        <form method="POST">
 
-    <label>Tahun Mobil</label><br>
-    <input type="number" name="tahun_mobil" min="1990" max="<?= date('Y') ?>" required><br><br>
+            <label>Tipe Mobil</label>
+            <input type="text" name="tipe_mobil" required>
 
-    <label>Plat Nomor</label><br>
-    <input name="plat_nomor" required><br><br>
+            <label>Tahun Mobil</label>
+            <input type="number" name="tahun_mobil"
+                   min="1990" max="<?= date('Y') ?>" required>
 
-    <label>Status</label><br>
-    <select name="status">
-        <option value="available">Available</option>
-        <option value="unavailable">Unavailable</option>
-    </select><br><br>
+            <label>Plat Nomor</label>
+            <input type="text" name="plat_nomor" required>
 
-    <button type="submit">Simpan</button>
-</form>
+            <label>Status</label>
+            <select name="status">
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+            </select>
+
+            <div class="form-actions">
+                <button type="submit">Simpan</button>
+                <a href="kendaraan.php">Batal</a>
+            </div>
+
+        </form>
+    </div>
 
 </div>
 </div>
+
 </body>
 </html>
