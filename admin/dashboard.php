@@ -65,15 +65,6 @@ $totalOutstanding = "Rp 0";
         </div>
     </div>
 
-    <h3>Menu Pengelolaan</h3>
-    <div class="menu-grid">
-        <a href="users.php" class="menu-card">👤 Kelola User</a>
-        <a href="#" class="menu-card">🚗 Kelola Kendaraan</a>
-        <a href="#" class="menu-card">💳 Pembayaran</a>
-        <a href="#" class="menu-card">📍 Geofence</a>
-        <a href="#" class="menu-card">📄 Laporan</a>
-        <a href="logout.php" class="menu-card danger">🚪 Logout</a>
-    </div>
 </div>
 </div>
 
