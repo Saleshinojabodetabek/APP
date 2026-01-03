@@ -122,7 +122,7 @@ body {
 
 <div class="login-box">
 
-    <img src="/admin/logo.png" alt="logo">
+    <img src="/assets/img/logo.png" alt="logo">
 
     <h2>Login Admin</h2>
 
