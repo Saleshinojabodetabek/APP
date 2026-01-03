@@ -540,7 +540,7 @@ body {
 
 /* Header kolom No */
 .table thead th:first-child {
-  background: linear-gradient(180deg, #e0ecff, #d6e4ff);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
   color: #0d6efd;
   text-align: center;
 }
@@ -552,23 +552,23 @@ body {
 
 /* Header Tahun */
 .table thead th:nth-child(3) {
-  background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
   text-align: center;
 }
 
 /* Header Plat Nomor */
 .table thead th:nth-child(4) {
-  background: linear-gradient(180deg, #eef2ff, #e0e7ff);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
 }
 
 /* Header Status */
 .table thead th:nth-child(5) {
-  background: linear-gradient(180deg, #ecfdf5, #d1fae5);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
   text-align: center;
 }
 
 /* Header Aksi */
 .table thead th:last-child {
-  background: linear-gradient(180deg, #fef2f2, #fee2e2);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
   text-align: center;
 }
