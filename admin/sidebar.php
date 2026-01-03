@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="logo">
-        <img src="assets/img/logo.png" alt="Logo">
+        <img src="../assets/img/logo.png" alt="Logo">
         <span>Admin Panel</span>
     </div>
 
