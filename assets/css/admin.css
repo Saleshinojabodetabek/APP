@@ -548,27 +548,34 @@ body {
 /* Header Tipe Mobil */
 .table thead th:nth-child(2) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+  color: #0d6efd;
+  text-align: center;
 }
 
 /* Header Tahun */
 .table thead th:nth-child(3) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+  color: #0d6efd;
   text-align: center;
 }
 
 /* Header Plat Nomor */
 .table thead th:nth-child(4) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+  color: #0d6efd;
+  text-align: center;
 }
 
 /* Header Status */
 .table thead th:nth-child(5) {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+  color: #0d6efd;
   text-align: center;
 }
 
 /* Header Aksi */
 .table thead th:last-child {
   background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+  color: #0d6efd;
   text-align: center;
 }
