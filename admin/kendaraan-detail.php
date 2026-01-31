@@ -57,7 +57,7 @@ $fotos = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
     <div class="page-header">
         <h2>Detail Kendaraan</h2>
-        <a href="kendaraan.php" class="btn-primary">← Kembali</a>
+        <a href="kendaraan.php" class="btn-primary">Kembali</a>
     </div>
 
     <div class="detail-card">
