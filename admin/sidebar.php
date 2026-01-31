@@ -10,7 +10,7 @@
         <li class="title">Master Data</li>
         <li><a href="mitra.php">👤 Data Mitra</a></li>
         <li><a href="kendaraan.php">🚗 Kendaraan</a></li>
-        <li><a href="#">📄 Kontrak & Kemitraan</a></li>
+        <li><a href="mitra-management.php">📄 Mitra Management</a></li>
 
         <li class="title">Transaksi</li>
         <li><a href="#">💳 Pembayaran</a></li>
