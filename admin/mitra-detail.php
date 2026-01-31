@@ -128,8 +128,8 @@ if (!$mitra) {
         <br>
 
         <div class="form-actions">
-            <a href="mitra.php">⬅ Kembali</a>
-            <a href="edit_mitra.php?id=<?= $mitraId ?>">✏️ Edit</a>
+            <a href="mitra.php">Kembali</a>
+            <a href="edit_mitra.php?id=<?= $mitraId ?>">Edit</a>
         </div>
 
     </div>

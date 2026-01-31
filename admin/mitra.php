@@ -22,6 +22,10 @@ $mitra = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>Kelola Mitra</title>
     <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <!-- ICON -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -30,13 +34,11 @@ $mitra = $stmt->fetchAll();
 <div class="main">
 <div class="content">
 
-    <!-- HEADER HALAMAN -->
     <div class="page-header">
         <h2>Kelola Mitra</h2>
         <a href="mitra-add.php" class="btn-primary">+ Tambah Mitra</a>
     </div>
 
-    <!-- TABEL DATA -->
     <table class="table">
         <thead>
             <tr>
@@ -66,34 +68,47 @@ $mitra = $stmt->fetchAll();
                 <td><?= htmlspecialchars($m['no_telepon']) ?></td>
                 <td><?= htmlspecialchars($m['tipe_mobil']) ?></td>
                 <td><?= htmlspecialchars($m['plat_mobil']) ?></td>
+
                 <td>
                     <?php if ($m['status'] === 'active'): ?>
                         <span class="badge-success">Active</span>
-                    <?php elseif ($m['status'] === 'suspend'): ?>
+                    <?php else: ?>
                         <span class="badge-warning">Suspend</span>
                     <?php endif; ?>
                 </td>
-                <td>
-                    <a href="mitra-detail.php?id=<?= $m['id'] ?>">Detail</a>
-                    |
-                    <a href="mitra-edit.php?id=<?= $m['id'] ?>">Edit</a>
-                    |
-                    <?php if ($m['status'] === 'active'): ?>
-                        <a href="mitra-status.php?id=<?= $m['id'] ?>&status=suspend"
-                        onclick="return confirm('Suspend mitra ini?')">
-                        Suspend
-                        </a>
-                    <?php else: ?>
-                        <a href="mitra-status.php?id=<?= $m['id'] ?>&status=active"
-                        onclick="return confirm('Aktifkan kembali mitra ini?')">
-                        Aktifkan
-                        </a>
-                    <?php endif; ?>
-                    |
-                    <a href="mitra-delete.php?id=<?= $m['id'] ?>"
-                    onclick="return confirm('Yakin hapus mitra ini?')">
-                    Hapus
+
+                <td class="action-icons">
+
+                    <!-- DETAIL -->
+                    <a href="mitra-detail.php?id=<?= $m['id'] ?>" title="Detail">
+                        <i class="fa-solid fa-eye"></i>
                     </a>
+
+                    <!-- EDIT -->
+                    <a href="mitra-edit.php?id=<?= $m['id'] ?>" title="Edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <!-- HAPUS -->
+                    <a href="mitra-delete.php?id=<?= $m['id'] ?>"
+                       onclick="return confirm('Yakin hapus mitra ini?')"
+                       title="Hapus">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+
+                    <!-- STATUS OPTION -->
+                    <form action="mitra-status.php" method="GET" class="status-form">
+                        <input type="hidden" name="id" value="<?= $m['id'] ?>">
+                        <select name="status" onchange="this.form.submit()">
+                            <option value="active" <?= $m['status']=='active'?'selected':'' ?>>
+                                Active
+                            </option>
+                            <option value="suspend" <?= $m['status']=='suspend'?'selected':'' ?>>
+                                Suspend
+                            </option>
+                        </select>
+                    </form>
+
                 </td>
             </tr>
         <?php endforeach; ?>
