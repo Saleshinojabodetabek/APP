@@ -74,6 +74,10 @@ $mitra = $stmt->fetchAll();
                 <td><?= htmlspecialchars($m['plat_mobil']) ?></td>
 
                 <td>
+                    Rp <?= number_format($m['saldo'], 0, ',', '.') ?>
+                </td>
+                
+                <td>
                     <?php if ($m['status_online'] === 'online'): ?>
                         <span class="badge-success">Online</span>
                     <?php else: ?>
@@ -81,9 +85,6 @@ $mitra = $stmt->fetchAll();
                     <?php endif; ?>
                 </td>
 
-                <td>
-                    Rp <?= number_format($m['saldo'], 0, ',', '.') ?>
-                </td>
 
                 <td class="action-icons">
 
