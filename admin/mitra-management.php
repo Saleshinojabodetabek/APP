@@ -52,8 +52,8 @@ $mitra = $stmt->fetchAll();
                 <th>No Telepon</th>
                 <th>Tipe Mobil</th>
                 <th>Plat Mobil</th>
-                <th>Status</th>
                 <th>Saldo</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -76,7 +76,7 @@ $mitra = $stmt->fetchAll();
                 <td>
                     Rp <?= number_format($m['saldo'], 0, ',', '.') ?>
                 </td>
-                
+
                 <td>
                     <?php if ($m['status_online'] === 'online'): ?>
                         <span class="badge-success">Online</span>
