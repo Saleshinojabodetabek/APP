@@ -18,6 +18,10 @@ $data = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>Kelola Kendaraan</title>
     <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <!-- ICON -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -26,13 +30,11 @@ $data = $stmt->fetchAll();
 <div class="main">
 <div class="content">
 
-    <!-- HEADER HALAMAN -->
     <div class="page-header">
         <h2>Kelola Kendaraan</h2>
         <a href="kendaraan-add.php" class="btn-primary">+ Tambah Kendaraan</a>
     </div>
 
-    <!-- TABEL DATA -->
     <table class="table">
         <thead>
             <tr>
@@ -48,7 +50,7 @@ $data = $stmt->fetchAll();
 
         <?php if (count($data) === 0): ?>
             <tr>
-                <td colspan="6">Belum ada data kendaraan</td>
+                <td colspan="6" style="text-align:center;">Belum ada data kendaraan</td>
             </tr>
         <?php endif; ?>
 
@@ -62,16 +64,30 @@ $data = $stmt->fetchAll();
                     <?php if ($k['status'] === 'available'): ?>
                         <span class="badge-success">Available</span>
                     <?php else: ?>
-                        <span class="badge-danger">Unavailable</span>
+                        <span class="badge-warning">Unavailable</span>
                     <?php endif; ?>
                 </td>
-                <td>
-                    <a href="kendaraan-edit.php?id=<?= $k['id'] ?>">Edit</a>
-                    |
-                    <a href="kendaraan-delete.php?id=<?= $k['id'] ?>"
-                       onclick="return confirm('Yakin hapus kendaraan ini?')">
-                       Hapus
+
+                <!-- AKSI ICON -->
+                <td class="action-icons">
+
+                    <!-- DETAIL -->
+                    <a href="kendaraan-detail.php?id=<?= $k['id'] ?>" title="Detail Kendaraan">
+                        <i class="fa-solid fa-eye"></i>
                     </a>
+
+                    <!-- EDIT -->
+                    <a href="kendaraan-edit.php?id=<?= $k['id'] ?>" title="Edit Kendaraan">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <!-- HAPUS -->
+                    <a href="kendaraan-delete.php?id=<?= $k['id'] ?>"
+                       onclick="return confirm('Yakin hapus kendaraan ini?')"
+                       title="Hapus Kendaraan">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+
                 </td>
             </tr>
         <?php endforeach; ?>
