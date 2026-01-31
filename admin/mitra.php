@@ -42,7 +42,7 @@ $mitra = $stmt->fetchAll();
             <tr>
                 <th>No</th>
                 <th>Nama Mitra</th>
-                <th>Email (Gmail)</th>
+                <th>Email</th>
                 <th>No Telepon</th>
                 <th>Tipe Mobil</th>
                 <th>Plat Mobil</th>
@@ -54,7 +54,7 @@ $mitra = $stmt->fetchAll();
 
         <?php if (count($mitra) === 0): ?>
             <tr>
-                <td colspan="8">Belum ada data mitra</td>
+                <td colspan="8" style="text-align:center;">Belum ada data mitra</td>
             </tr>
         <?php endif; ?>
 
@@ -74,6 +74,8 @@ $mitra = $stmt->fetchAll();
                     <?php endif; ?>
                 </td>
                 <td>
+                    <a href="mitra-detail.php?id=<?= $m['id'] ?>">Detail</a>
+                    |
                     <a href="mitra-edit.php?id=<?= $m['id'] ?>">Edit</a>
                     |
                     <a href="mitra-delete.php?id=<?= $m['id'] ?>"

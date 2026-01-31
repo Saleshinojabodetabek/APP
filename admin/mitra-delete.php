@@ -22,7 +22,7 @@ try {
 
     /* AMBIL DATA MITRA */
     $stmt = $pdo->prepare("
-        SELECT plat_mobil
+        SELECT plat_mobil, foto_identitas, foto_mitra
         FROM mitra
         WHERE id = ?
         LIMIT 1
@@ -35,12 +35,31 @@ try {
     }
 
     /* KEMBALIKAN KENDARAAN KE AVAILABLE */
-    $stmt = $pdo->prepare("
-        UPDATE kendaraan
-        SET status = 'available'
-        WHERE plat_nomor = ?
-    ");
-    $stmt->execute([$mitra['plat_mobil']]);
+    if (!empty($mitra['plat_mobil'])) {
+        $stmt = $pdo->prepare("
+            UPDATE kendaraan
+            SET status = 'available'
+            WHERE plat_nomor = ?
+        ");
+        $stmt->execute([$mitra['plat_mobil']]);
+    }
+
+    /* HAPUS FILE FOTO */
+    $uploadDir = __DIR__ . "/upload/datamitra/";
+
+    if (!empty($mitra['foto_identitas'])) {
+        $fileIdentitas = $uploadDir . $mitra['foto_identitas'];
+        if (file_exists($fileIdentitas)) {
+            unlink($fileIdentitas);
+        }
+    }
+
+    if (!empty($mitra['foto_mitra'])) {
+        $fileMitra = $uploadDir . $mitra['foto_mitra'];
+        if (file_exists($fileMitra)) {
+            unlink($fileMitra);
+        }
+    }
 
     /* HAPUS DATA MITRA */
     $stmt = $pdo->prepare("
@@ -56,7 +75,11 @@ try {
     exit;
 
 } catch (Exception $e) {
-    /* ROLLBACK JIKA ADA ERROR */
-    $pdo->rollBack();
+
+    /* ROLLBACK JIKA ERROR */
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
     die("Gagal menghapus mitra: " . $e->getMessage());
 }

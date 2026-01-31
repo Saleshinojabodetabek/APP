@@ -26,10 +26,7 @@ if (!$mitra) {
     exit;
 }
 
-/* AMBIL KENDARAAN:
-   - available
-   - + kendaraan yang sedang dipakai mitra ini
-*/
+/* AMBIL KENDARAAN */
 $stmt = $pdo->prepare("
     SELECT id, tipe_mobil, plat_nomor, status
     FROM kendaraan
@@ -40,21 +37,23 @@ $stmt = $pdo->prepare("
 $stmt->execute([$mitra['plat_mobil']]);
 $kendaraanList = $stmt->fetchAll();
 
-/* SIMPAN PERUBAHAN */
+/* ================= SIMPAN UPDATE ================= */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $nama_mitra  = trim($_POST['nama_mitra']);
-    $email       = trim($_POST['email']);
-    $no_telepon  = trim($_POST['no_telepon']);
-    $kendaraanId = (int) $_POST['kendaraan_id'];
-    $passwordBaru = trim($_POST['password']);
+    $nama_mitra     = trim($_POST['nama_mitra']);
+    $email          = trim($_POST['email']);
+    $no_telepon     = trim($_POST['no_telepon']);
+    $alamat_lengkap = trim($_POST['alamat_lengkap']);
+    $jenis_kelamin  = $_POST['jenis_kelamin'];
+    $tanggal_lahir  = $_POST['tanggal_lahir'];
+    $kendaraanId    = (int) $_POST['kendaraan_id'];
+    $passwordBaru   = trim($_POST['password']);
 
-    /* validasi email */
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("Format email tidak valid");
     }
 
-    /* ambil kendaraan terpilih */
+    /* AMBIL KENDARAAN BARU */
     $stmt = $pdo->prepare("
         SELECT tipe_mobil, plat_nomor
         FROM kendaraan
@@ -68,40 +67,74 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Kendaraan tidak valid.");
     }
 
-    /* JIKA KENDARAAN DIGANTI */
+    /* JIKA GANTI KENDARAAN */
     if ($kendaraanBaru['plat_nomor'] !== $mitra['plat_mobil']) {
 
-        /* kendaraan lama -> available */
         $stmt = $pdo->prepare("
-            UPDATE kendaraan
-            SET status = 'available'
+            UPDATE kendaraan SET status = 'available'
             WHERE plat_nomor = ?
         ");
         $stmt->execute([$mitra['plat_mobil']]);
 
-        /* kendaraan baru -> unavailable */
         $stmt = $pdo->prepare("
-            UPDATE kendaraan
-            SET status = 'unavailable'
+            UPDATE kendaraan SET status = 'unavailable'
             WHERE id = ?
         ");
         $stmt->execute([$kendaraanId]);
     }
 
-    /* UPDATE MITRA */
+    /* ================= UPLOAD FOTO ================= */
+    $uploadDir = __DIR__ . "/upload/datamitra/";
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    function uploadFotoEdit($file, $prefix, $uploadDir, $fotoLama) {
+        if ($file['error'] !== 0) return $fotoLama;
+
+        if ($file['size'] > 2 * 1024 * 1024) {
+            die("Ukuran foto maksimal 2MB");
+        }
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png'];
+        if (!in_array($ext, $allowed)) {
+            die("Format foto harus JPG / PNG");
+        }
+
+        if ($fotoLama && file_exists($uploadDir . $fotoLama)) {
+            unlink($uploadDir . $fotoLama);
+        }
+
+        $fileName = $prefix.'_'.time().'_'.rand(100,999).'.'.$ext;
+        move_uploaded_file($file['tmp_name'], $uploadDir.$fileName);
+
+        return $fileName;
+    }
+
+    $foto_identitas = uploadFotoEdit(
+        $_FILES['foto_identitas'], 'identitas', $uploadDir, $mitra['foto_identitas']
+    );
+
+    $foto_mitra = uploadFotoEdit(
+        $_FILES['foto_mitra'], 'mitra', $uploadDir, $mitra['foto_mitra']
+    );
+
+    /* ================= UPDATE MITRA ================= */
     if ($passwordBaru !== '') {
 
         $stmt = $pdo->prepare("
-            UPDATE mitra
-            SET nama_mitra = ?, email = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?, password = ?
-            WHERE id = ?
+            UPDATE mitra SET
+            nama_mitra=?, email=?, no_telepon=?, alamat_lengkap=?,
+            jenis_kelamin=?, tanggal_lahir=?, foto_identitas=?, foto_mitra=?,
+            tipe_mobil=?, plat_mobil=?, password=?
+            WHERE id=?
         ");
+
         $stmt->execute([
-            $nama_mitra,
-            $email,
-            $no_telepon,
-            $kendaraanBaru['tipe_mobil'],
-            $kendaraanBaru['plat_nomor'],
+            $nama_mitra, $email, $no_telepon, $alamat_lengkap,
+            $jenis_kelamin, $tanggal_lahir, $foto_identitas, $foto_mitra,
+            $kendaraanBaru['tipe_mobil'], $kendaraanBaru['plat_nomor'],
             password_hash($passwordBaru, PASSWORD_DEFAULT),
             $mitraId
         ]);
@@ -109,16 +142,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
 
         $stmt = $pdo->prepare("
-            UPDATE mitra
-            SET nama_mitra = ?, email = ?, no_telepon = ?, tipe_mobil = ?, plat_mobil = ?
-            WHERE id = ?
+            UPDATE mitra SET
+            nama_mitra=?, email=?, no_telepon=?, alamat_lengkap=?,
+            jenis_kelamin=?, tanggal_lahir=?, foto_identitas=?, foto_mitra=?,
+            tipe_mobil=?, plat_mobil=?
+            WHERE id=?
         ");
+
         $stmt->execute([
-            $nama_mitra,
-            $email,
-            $no_telepon,
-            $kendaraanBaru['tipe_mobil'],
-            $kendaraanBaru['plat_nomor'],
+            $nama_mitra, $email, $no_telepon, $alamat_lengkap,
+            $jenis_kelamin, $tanggal_lahir, $foto_identitas, $foto_mitra,
+            $kendaraanBaru['tipe_mobil'], $kendaraanBaru['plat_nomor'],
             $mitraId
         ]);
     }
@@ -146,23 +180,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <div class="form-box">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
 
             <label>Nama Mitra</label>
-            <input type="text" name="nama_mitra"
-                   value="<?= htmlspecialchars($mitra['nama_mitra']) ?>" required>
+            <input type="text" name="nama_mitra" value="<?= htmlspecialchars($mitra['nama_mitra']) ?>" required>
 
-            <label>Email (Gmail)</label>
-            <input type="email" name="email"
-                   value="<?= htmlspecialchars($mitra['email']) ?>" required>
+            <label>Email</label>
+            <input type="email" name="email" value="<?= htmlspecialchars($mitra['email']) ?>" required>
 
             <label>No Telepon</label>
-            <input type="text" name="no_telepon"
-                   value="<?= htmlspecialchars($mitra['no_telepon']) ?>" required>
+            <input type="text" name="no_telepon" value="<?= htmlspecialchars($mitra['no_telepon']) ?>" required>
+
+            <label>Alamat Lengkap</label>
+            <textarea name="alamat_lengkap" required><?= htmlspecialchars($mitra['alamat_lengkap']) ?></textarea>
+
+            <label>Jenis Kelamin</label>
+            <select name="jenis_kelamin" required>
+                <option value="Laki-laki" <?= $mitra['jenis_kelamin']=='Laki-laki'?'selected':'' ?>>Laki-laki</option>
+                <option value="Perempuan" <?= $mitra['jenis_kelamin']=='Perempuan'?'selected':'' ?>>Perempuan</option>
+            </select>
+
+            <label>Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir" value="<?= $mitra['tanggal_lahir'] ?>" required>
+
+            <label>Foto Identitas (kosongkan jika tidak ganti)</label>
+            <input type="file" name="foto_identitas" accept="image/*">
+
+            <label>Foto Mitra (kosongkan jika tidak ganti)</label>
+            <input type="file" name="foto_mitra" accept="image/*">
 
             <label>Password Baru (opsional)</label>
-            <input type="password" name="password"
-                   placeholder="Kosongkan jika tidak ingin ganti password">
+            <input type="password" name="password">
 
             <label>Pilih Kendaraan</label>
             <select name="kendaraan_id" required>
@@ -171,7 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <?= $k['plat_nomor'] === $mitra['plat_mobil'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($k['tipe_mobil']) ?> —
                         <?= htmlspecialchars($k['plat_nomor']) ?>
-                        <?= $k['status'] === 'unavailable' ? '(Dipakai)' : '' ?>
+                        <?= $k['status']=='unavailable'?'(Dipakai)':'' ?>
                     </option>
                 <?php endforeach; ?>
             </select>
