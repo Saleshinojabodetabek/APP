@@ -69,8 +69,8 @@ $mitra = $stmt->fetchAll();
                 <td>
                     <?php if ($m['status'] === 'active'): ?>
                         <span class="badge-success">Active</span>
-                    <?php else: ?>
-                        <span class="badge-danger">Inactive</span>
+                    <?php elseif ($m['status'] === 'suspend'): ?>
+                        <span class="badge-warning">Suspend</span>
                     <?php endif; ?>
                 </td>
                 <td>
@@ -78,9 +78,21 @@ $mitra = $stmt->fetchAll();
                     |
                     <a href="mitra-edit.php?id=<?= $m['id'] ?>">Edit</a>
                     |
+                    <?php if ($m['status'] === 'active'): ?>
+                        <a href="mitra-status.php?id=<?= $m['id'] ?>&status=suspend"
+                        onclick="return confirm('Suspend mitra ini?')">
+                        Suspend
+                        </a>
+                    <?php else: ?>
+                        <a href="mitra-status.php?id=<?= $m['id'] ?>&status=active"
+                        onclick="return confirm('Aktifkan kembali mitra ini?')">
+                        Aktifkan
+                        </a>
+                    <?php endif; ?>
+                    |
                     <a href="mitra-delete.php?id=<?= $m['id'] ?>"
-                       onclick="return confirm('Yakin hapus mitra ini?')">
-                       Hapus
+                    onclick="return confirm('Yakin hapus mitra ini?')">
+                    Hapus
                     </a>
                 </td>
             </tr>

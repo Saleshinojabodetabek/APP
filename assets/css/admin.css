@@ -230,13 +230,12 @@ body {
   font-weight: 600;
 }
 
-.badge-danger {
-  background: #fdecea;
-  color: #dc3545;
-  padding: 4px 10px;
-  border-radius: 12px;
+.badge-warning {
+  background: #f59e0b;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
   font-size: 12px;
-  font-weight: 600;
 }
 
 /* =========================
