@@ -37,31 +37,6 @@ if (!$mitra) {
     <meta charset="UTF-8">
     <title>Detail Mitra</title>
     <link rel="stylesheet" href="../assets/css/admin.css">
-    <style>
-        .detail-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
-        }
-        .detail-row {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            margin-bottom: 10px;
-        }
-        .detail-row strong {
-            color: #333;
-        }
-        .photo-box {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .photo-box img {
-            max-width: 200px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-    </style>
 </head>
 <body>
 
