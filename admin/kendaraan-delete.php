@@ -16,10 +16,44 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $id = (int) $_GET['id'];
 
-/* HAPUS DATA KENDARAAN */
-$stmt = $pdo->prepare("DELETE FROM kendaraan WHERE id = ?");
-$stmt->execute([$id]);
+try {
+    /* ================= TRANSACTION ================= */
+    $pdo->beginTransaction();
 
-/* KEMBALI KE LIST */
-header("Location: kendaraan.php");
-exit;
+    /* AMBIL FOTO KENDARAAN */
+    $stmt = $pdo->prepare("
+        SELECT foto
+        FROM kendaraan_foto
+        WHERE kendaraan_id = ?
+    ");
+    $stmt->execute([$id]);
+    $fotos = $stmt->fetchAll();
+
+    /* HAPUS FILE FOTO */
+    $uploadDir = __DIR__ . "/upload/datakendaraan/";
+
+    foreach ($fotos as $f) {
+        $filePath = $uploadDir . $f['foto'];
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
+
+    /* HAPUS DATA KENDARAAN (foto DB ikut terhapus karena CASCADE) */
+    $stmt = $pdo->prepare("DELETE FROM kendaraan WHERE id = ?");
+    $stmt->execute([$id]);
+
+    /* COMMIT */
+    $pdo->commit();
+
+    header("Location: kendaraan.php");
+    exit;
+
+} catch (Exception $e) {
+
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    die("Gagal menghapus kendaraan: " . $e->getMessage());
+}
