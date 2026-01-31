@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="text" name="no_telepon" required>
 
             <label>Alamat Lengkap</label>
-            <textarea name="alamat_lengkap" rows="3" required></textarea>
+            <input type="text" name="alamat_lengkap" required>
 
             <label>Jenis Kelamin</label>
             <select name="jenis_kelamin" required>
