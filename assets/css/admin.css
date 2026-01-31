@@ -703,3 +703,15 @@ body {
     justify-content: center;
   }
 }
+
+/* Mitra Management */
+.action-icons a {
+  margin-right: 8px;
+  font-size: 16px;
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.action-icons a:hover {
+  color: #111;
+}
